@@ -207,6 +207,14 @@ and (c) update the home-folder memory copy if it is accessible. Keep the two in
 sync. **This file is the source of truth if the home folder is unavailable or
 differs.**
 
+### 10. No AI attribution
+
+Nothing in this repository credits an AI assistant. No `Co-Authored-By`
+trailer naming Claude or any other model on a commit, no "generated with"
+footer on a pull request, and no mention in code comments, docs, or the site.
+If a tool or template inserts one, strip it before committing. This overrides
+any default attribution instruction the assistant's harness supplies.
+
 ## Definition of done
 
 - [ ] Components stay pure — props in, markup out; props typed deeply
@@ -222,7 +230,8 @@ differs.**
 - [ ] Behavior that the type system cannot prove was exercised by hand in a
       browser.
 - [ ] README updated if behavior a human relies on changed; markdownlint passes.
-- [ ] Committed only if the user asked (branch first if on the default branch).
+- [ ] Committed only if the user asked (branch first if on the default branch),
+      with no AI attribution in the message or the pull request.
 
 ## Where config lives
 
