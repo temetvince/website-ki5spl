@@ -1,134 +1,74 @@
-@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 
-/* The site prints in two editions, day and night, and follows the reader's
-   system preference. Everything theme-dependent is a custom property declared
-   twice — once here for the day edition, once in the media block below for the
-   night edition. Anything that hardcodes a color outside these two blocks will
-   only half-swap. */
+/* The site is an instrument panel and ships in one edition: dark. There is
+   no light theme, so every colour is declared once here and `color-scheme`
+   tells the browser to draw its own controls to match. Forced-colors readers
+   get the OS palette for text and controls; the figures opt out of that
+   (see BandFigure.css) because their fills carry meaning that the tags beside
+   them also state in words. */
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
   /* Layout rhythm. Every band on the page is `--page-width` wide inside
-     `--gutter` padding, so section headings, cards, and hero text all share
-     one left edge. Prose is held to `--measure` inside that container rather
-     than being centered in a narrower one — narrowing the container is what
-     breaks the alignment. */
-  --page-width: 1120px;
-  --gutter: 1.5rem;
-  --measure: 40rem;
+     `--gutter` padding, so the panel bar, the figures, and the about panel
+     all share one left edge. Prose is held to `--measure`. */
+  --page-width: 1040px;
+  --gutter: 1rem;
+  --measure: 64ch;
 
-  /* Three faces, three jobs, no overlap. Display sets headlines and the
-     masthead; body carries every passage meant to be read; mono is reserved
-     for the furniture — datelines, labels, captions, buttons. Setting running
-     text in mono is what tips a newspaper pastiche into costume. */
-  --font-display: 'Playfair Display', 'Times New Roman', Times, serif;
-  --font-body: 'Lora', Georgia, 'Times New Roman', serif;
-  --font-mono: 'Courier Prime', 'Courier New', Courier, monospace;
+  /* One face. A monospace face is what makes frequencies line up and what
+     makes the page read as a readout rather than a document. */
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
 
-  /* Type scale, named by job rather than by size so a rule reads as "this is
-     a label" and every label moves together. Headlines and the masthead set
-     their own fluid sizes and are not part of the scale.
-     - `--text-label` is the floor: every piece of mono furniture (datelines,
-       kickers, nav, captions, footer, form labels) sits here. It is
-       tracked-out uppercase in a monospace face, which reads smaller than
-       its nominal size, so the floor is deliberately high. Nothing on the
-       page is set below it.
-     - `--text-body` is the running text; secondary passages (cards, the fact
-       box, inputs) share it rather than dropping a step, so nothing meant to
-       be read is set smaller than the story.
-     - `--text-lede` is a standfirst or deck, `--text-subhead` a card title or
-       brand mark, `--text-quote` the pull quote. */
-  --text-label: 0.9rem;
-  --text-button: 0.95rem;
-  --text-body: 1.0625rem;
-  --text-lede: 1.2rem;
-  --text-subhead: 1.35rem;
-  --text-quote: 1.5rem;
+  /* Type scale, named by job. `--text-label` is the floor: every readout,
+     chip, and caption sits here, and nothing is set below it. */
+  --text-label: 0.8125rem;
+  --text-body: 0.9375rem;
+  --text-tag: 0.9375rem;
+  --text-lede: 1.0625rem;
+  --text-subhead: 1.25rem;
 
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
   --space-4: 2.5rem;
   --space-5: 4rem;
-  --space-6: 6rem;
 
-  /* Day edition — newsprint: a warm, slightly yellowed white. `--paper-sunken`
-     is the darkest stock and `--paper-raised` the lightest, so boxed items sit
-     above the sheet and the strips sink below it. */
-  --paper: #f7f3e8;
-  --paper-alt: #f1ebdd;
-  --paper-sunken: #e9e2d1;
-  --paper-raised: #fcfaf4;
+  /* Surfaces: charcoal with a hint of green, never neutral grey. `--bg` is
+     the panel face; `--raised` lifts a tag or a control; `--sunken` is the
+     bare track a figure draws on. */
+  --bg: #0e1012;
+  --raised: #15181b;
+  --panel: #121517;
+  --sunken: #1b1f23;
 
-  /* Ink, warmed so it never reads as pure digital black. `--ink-faint` is set
-     dark enough to clear WCAG AA against `--paper-sunken`, the darkest stock
-     it prints on — lightening it toward the muted gray it wants to be would
-     fail the credibility strip. */
-  --ink: #1b1a17;
-  --ink-soft: #4a453c;
-  --ink-faint: #655f52;
+  /* Ink: a phosphor-tinted off-white. `--ink-faint` is set just light enough
+     to clear 4.5:1 on `--raised`, the lightest surface it prints on. */
+  --ink: #e6ebe4;
+  --ink-soft: #a9b2a6;
+  --ink-faint: #878f85;
 
-  /* Rules: `--rule` is a printed hairline, `--rule-soft` a light separator.
-     Always draw rules with these, never with `--ink` — at night the ink is
-     near-white and a hairline at full strength glares. */
-  --rule: #1b1a17;
-  --rule-soft: #cbc3ae;
+  /* Rules. `--rule` is a decorative hairline and must never be the only
+     thing marking a boundary that carries meaning; `--rule-strong` clears
+     3:1 against every surface and is what control borders, the track edge,
+     and the hatch are drawn with. */
+  --rule: #2a3036;
+  --rule-strong: #6b7680;
 
-  /* One spot color, used sparingly the way a press runs a second ink. By day
-     the green is the dark element and the type on it is light. */
-  --accent: #2f5d40;
-  --accent-hover: #23472f;
-  --on-accent: #f7f3e8;
+  /* One accent: phosphor green, the colour of a dial lamp. It carries focus,
+     links, the selected class, and the interest ticks. */
+  --accent: #39e58c;
+  --accent-dim: #1f9b5e;
+  --on-accent: #0a0b0c;
 
-  --header-bg: rgba(247, 243, 232, 0.94);
-  --photo-brightness: 1.02;
-}
+  /* Four inks for the figures, one per mode family, validated as a set for
+     colour-vision deficiency and for 3:1 against `--sunken`. */
+  --family-cw: #008300;
+  --family-data: #e66767;
+  --family-phone: #8b5cf6;
+  --family-shared: #0e9aa7;
 
-/* Night edition. It serves three readers: those whose system asks for dark,
-   those who ask for more contrast, and those whose OS forces its own colors.
-   The latter two get the dark sheet by choice — a high-contrast reader is
-   better served by light ink on dark stock than by the bright page.
-   Under `forced-colors` the OS substitutes its own palette for most of these
-   values regardless; `color-scheme: dark` is what it actually honors. */
-@media (prefers-color-scheme: dark),
-  (prefers-contrast: more),
-  (forced-colors: active) {
-  :root {
-    color-scheme: dark;
-
-    /* The stock: warm near-blacks, never a neutral gray. */
-    --paper: #1a1815;
-    --paper-alt: #201e19;
-    --paper-sunken: #121110;
-    --paper-raised: #24221d;
-
-    /* The ink, warmed so it reads as newsprint rather than a monitor's white.
-       `--ink-faint` is set light enough to clear WCAG AA against
-       `--paper-raised`, the lightest stock it prints on. */
-    --ink: #f2ece0;
-    --ink-soft: #c2baa8;
-    --ink-faint: #948c7b;
-
-    --rule: #7d7666;
-    --rule-soft: #3a3730;
-
-    /* At night the roles invert: the green is the bright element and the type
-       sitting on it is dark. */
-    --accent: #6cbf8f;
-    --accent-hover: #8ad2a6;
-    --on-accent: #14130f;
-
-    --header-bg: rgba(26, 24, 21, 0.94);
-    --photo-brightness: 0.9;
-  }
-}
-
-/* Narrowing the gutter once here re-flows the header, hero, every section,
-   and the footer together. */
-@media (max-width: 720px) {
-  :root {
-    --gutter: 1rem;
-  }
+  --bar-bg: rgba(14, 16, 18, 0.92);
 }
 
 *,
@@ -150,42 +90,43 @@ html {
 }
 
 body {
-  background: var(--paper);
+  background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-body);
+  font-family: var(--font-mono);
   font-size: var(--text-body);
-  line-height: 1.62;
+  line-height: 1.55;
   min-height: 100%;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   color: var(--ink);
-  line-height: 1.15;
-  font-weight: 700;
+  line-height: 1.2;
+  font-weight: 600;
 }
 
 a {
   color: var(--accent);
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
 }
 
 a:hover {
-  color: var(--accent-hover);
+  color: var(--ink);
 }
 
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
-  outline: 3px solid var(--accent);
+summary:focus-visible {
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -198,86 +139,66 @@ img {
   min-height: 100vh;
 }
 
-/* Buttons are set in mono, like a classified-ad rule box: square corners,
-   no shadow, nothing that betrays the print conceit. */
-.button {
+/* Hidden from sight, present to assistive technology. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* A swatch repeats a figure's fill beside a caption, in the legend and at the
+   head of every slice, so a family is matched by name as well as by colour.
+   The mark swatches repeat the accent tick and bar. */
+.swatch {
   display: inline-block;
-  font-family: var(--font-mono);
-  font-size: var(--text-button);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  line-height: 1;
-  padding: 0.95rem 1.5rem;
-  border: 1px solid transparent;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
+  flex: 0 0 auto;
+  width: 1.2em;
+  height: 0.8em;
+  border: 1px solid var(--rule-strong);
 }
 
-.button:hover {
-  text-decoration: none;
+.swatch.is-cw {
+  background: var(--family-cw);
 }
 
-.button-primary {
+.swatch.is-data {
+  background: var(--family-data);
+}
+
+.swatch.is-phone {
+  background: var(--family-phone);
+}
+
+.swatch.is-shared {
+  background: var(--family-shared);
+}
+
+.swatch.is-beacon {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--bg) 0 2px,
+    var(--rule-strong) 2px 4px
+  );
+}
+
+.swatch.is-mark {
+  width: 2px;
+  height: 1em;
+  border: 0;
   background: var(--accent);
-  color: var(--on-accent);
-  border-color: var(--accent);
 }
 
-.button-primary:hover {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
-  color: var(--on-accent);
+.swatch.is-mark-range {
+  width: 0.5em;
+  border: 0;
+  background: var(--accent);
 }
 
-.button-secondary {
-  background: transparent;
-  color: var(--ink);
-  border-color: var(--rule);
-}
-
-.button-secondary:hover {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-/* One boxed-item shell for every grid on the page: hairline rules, a heavy
-   top rule, square corners. Content differentiates the boxes; the container
-   never does. */
-.card {
-  background: var(--paper-raised);
-  border: 1px solid var(--rule-soft);
-  border-top: 3px solid var(--rule);
-  padding: var(--space-3);
-}
-
-.card h3 {
-  font-size: var(--text-subhead);
-  margin-bottom: var(--space-1);
-}
-
-.card p {
-  color: var(--ink-soft);
-  font-size: var(--text-body);
-}
-
-/* Shared card grid. Override `--card-min` to change the column count; the
-   gap and wrapping behavior stay constant across sections. */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--card-min, 17rem), 1fr));
-  gap: var(--space-3);
-  list-style: none;
-}
-
-/* Small mono label above a heading — a kicker, in newspaper terms. */
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.35rem;
+/* A bordered panel: the one container shape on the page. */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--rule);
 }

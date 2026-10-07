@@ -3,13 +3,13 @@ import './Masthead.css';
 import type MastheadProps from './MastheadProps';
 
 /**
- * The nameplate across the top of the page: title, standing tagline, and a
- * dateline rule.
+ * The title block beneath the panel bar: the site's title in display size, a
+ * standing tagline, and a row of readouts.
  *
- * The title is deliberately not a heading element. It repeats the site name
- * already carried by the header brand and the footer, and the page's single
- * `h1` belongs to the hero's headline, where the value proposition lives.
- * Promoting this to an `h1` would give the document two competing ones.
+ * The title is deliberately not a heading element. It names the site, which
+ * the panel bar's brand and the footer already do, and the page's single
+ * `h1` belongs to the headline that follows. Promoting this to an `h1`
+ * would give the document two competing ones.
  */
 export default function Masthead(props: MastheadProps) {
   return (

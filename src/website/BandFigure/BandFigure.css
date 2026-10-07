@@ -1,0 +1,237 @@
+.band-figure {
+  margin: var(--space-1) 0 var(--space-2);
+}
+
+/* The body's height is set by the component once the tags are measured and
+   placed; the drawing and every tag are positioned inside it, so bar, marks,
+   leaders, and tags share one coordinate space. */
+.band-figure-body {
+  position: relative;
+  min-height: 6rem;
+}
+
+.band-figure-graphic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  /* The drawing is a data graphic whose fills carry meaning that the tags
+     beside it also state in words. Under forced colors the OS would paint
+     every fill the same, so the drawing keeps its own palette there. */
+  forced-color-adjust: none;
+}
+
+/* The track is the band's full extent. Slices the reader may not use are
+   left as bare track, so a gap reads as "not yours". Its edge is a boundary
+   that carries meaning, so it is drawn with `--rule-strong`. */
+.band-figure-track {
+  fill: var(--sunken);
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+/* Slices are separated by a hairline of panel colour rather than a stroke
+   of their own, so two touching families read as two marks. Each family's
+   fill glows faintly, the way a lit segment does on a front panel. */
+.band-figure-slice {
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+
+.band-figure-slice.is-cw {
+  fill: var(--family-cw);
+  filter: drop-shadow(0 0 3px var(--family-cw));
+}
+
+.band-figure-slice.is-data {
+  fill: var(--family-data);
+  filter: drop-shadow(0 0 3px var(--family-data));
+}
+
+.band-figure-slice.is-phone {
+  fill: var(--family-phone);
+  filter: drop-shadow(0 0 3px var(--family-phone));
+}
+
+.band-figure-slice.is-shared {
+  fill: var(--family-shared);
+  filter: drop-shadow(0 0 3px var(--family-shared));
+}
+
+/* A no-transmit slice is hatched, not merely recolored, so it is told apart
+   from an allowed slice by pattern as well as by color. */
+.band-figure-hatch-ground {
+  fill: var(--bg);
+}
+
+.band-figure-hatch-line {
+  stroke: var(--rule-strong);
+  stroke-width: 2;
+}
+
+.band-figure-slice.is-beacon {
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+/* Marks are drawn in the accent beside the bar rather than on it, so a tick
+   never has to clear a contrast ratio against a family fill. */
+.band-figure-mark {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.band-figure-mark-range {
+  fill: var(--accent);
+}
+
+.band-figure-leader {
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+.band-figure-leader.is-slice {
+  stroke: var(--ink-soft);
+}
+
+.band-figure-edge {
+  font-size: var(--text-label);
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+
+.band-figure-edge + .band-figure-body,
+.band-figure-body + .band-figure-edge {
+  margin-top: 0.3rem;
+}
+
+.band-figure-items {
+  list-style: none;
+}
+
+/* Every tag is one ruled line, placed by the component beside its spot on
+   the bar. A mark's tag wears its slice's colour as a short rule on its left
+   edge, so the eye can match a tag to the bar by colour without following
+   the leader. */
+.band-figure-item {
+  position: absolute;
+  left: 56px;
+  right: 0;
+  border-bottom: 1px solid var(--rule);
+  border-left: 3px solid transparent;
+  background: var(--bg);
+}
+
+.band-figure-item.family-cw {
+  border-left-color: var(--family-cw);
+}
+
+.band-figure-item.family-data {
+  border-left-color: var(--family-data);
+}
+
+.band-figure-item.family-phone {
+  border-left-color: var(--family-phone);
+}
+
+.band-figure-item.family-shared {
+  border-left-color: var(--family-shared);
+}
+
+.band-figure-item.family-beacon {
+  border-left-color: var(--rule-strong);
+}
+
+/* A slice heads the marks that sit inside it, so it sits on lifted stock
+   with a stronger rule above. */
+.band-figure-item.is-slice {
+  border-top: 1px solid var(--rule-strong);
+  background: var(--raised);
+}
+
+/* An open tag rises above its neighbours' leaders and borders. */
+.band-figure-item:has(details[open]) {
+  z-index: 1;
+}
+
+/* The tag itself: a single line that wraps only when it must. The whole line
+   is the disclosure's hit target, at least 2.75rem tall for a thumb. */
+.band-figure-item summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.6rem;
+  position: relative;
+  min-height: 2.75rem;
+  padding: 0.55rem 2rem 0.55rem 0.6rem;
+  font-size: var(--text-tag);
+  cursor: pointer;
+  list-style: none;
+}
+
+.band-figure-item summary::-webkit-details-marker {
+  display: none;
+}
+
+/* The disclosure state is shown by a sign pinned to the line's right edge,
+   not by colour. Pinning it keeps it on the first line when the tag wraps. */
+.band-figure-item summary::after {
+  content: '+';
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 700;
+  color: var(--ink-faint);
+}
+
+.band-figure-item details[open] summary::after {
+  content: '−';
+}
+
+.band-figure-item summary:hover {
+  background: var(--sunken);
+}
+
+.band-figure-item summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.band-figure-item .swatch {
+  align-self: center;
+}
+
+.band-figure-frequency {
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.band-figure-sideband {
+  font-size: var(--text-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.band-figure-activity {
+  color: var(--ink);
+}
+
+.band-figure-item.is-slice .band-figure-activity {
+  color: var(--ink-soft);
+}
+
+.band-figure-more {
+  padding: 0 0.6rem 0.7rem;
+  font-size: var(--text-body);
+  color: var(--ink-soft);
+}
+
+@media (max-width: 480px) {
+  .band-figure-item summary {
+    gap: 0.1rem 0.5rem;
+    padding-left: 0.45rem;
+  }
+}

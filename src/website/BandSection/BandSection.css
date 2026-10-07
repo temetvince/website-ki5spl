@@ -1,0 +1,28 @@
+.band {
+  margin-top: var(--space-3);
+  scroll-margin-top: 4.5rem;
+}
+
+/* A band's header is a panel strip: name, then the extent as a readout. */
+.band-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  background: var(--panel);
+}
+
+.band h3 {
+  font-size: var(--text-subhead);
+  font-weight: 700;
+}
+
+.band-extent {
+  font-size: var(--text-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}

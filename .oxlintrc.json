@@ -57,11 +57,11 @@
 
   "overrides": [
     {
-      // react-router's `<Route element={<Home />} />` is its required API,
-      // so jsx-no-jsx-as-prop cannot be satisfied here. Scoped, not global.
-      "files": ["src/App.tsx"],
+      // The band plan and the interest list are data tables, one row per
+      // frequency, and a table is as long as the spectrum it covers.
+      "files": ["src/data/*.ts"],
       "rules": {
-        "react-perf/jsx-no-jsx-as-prop": "off"
+        "eslint/max-lines": "off"
       }
     }
   ],
