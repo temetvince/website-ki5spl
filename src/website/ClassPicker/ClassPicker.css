@@ -1,0 +1,64 @@
+.class-picker {
+  border: 0;
+}
+
+/* A segmented control: one bordered strip, the segments divided by hairlines.
+   The native radio stays in the page for keyboard and screen-reader use but
+   is drawn beneath its label; the label is the visible button. */
+.class-picker-options {
+  display: inline-flex;
+  border: 1px solid var(--rule-strong);
+}
+
+.class-picker-option {
+  position: relative;
+}
+
+.class-picker-option + .class-picker-option {
+  border-left: 1px solid var(--rule-strong);
+}
+
+.class-picker-option input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.class-picker-option label {
+  display: block;
+  padding: 0.45rem 0.85rem;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.class-picker-option:hover label {
+  color: var(--ink);
+}
+
+/* The chosen segment is filled with the accent and carries the native radio
+   state, so it is told apart by shape and by state, not by colour alone. */
+.class-picker-option input:checked + label {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.class-picker-option input:focus-visible + label {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 420px) {
+  .class-picker-option label {
+    padding: 0.45rem 0.6rem;
+    letter-spacing: 0.06em;
+  }
+}

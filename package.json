@@ -1,5 +1,5 @@
 {
-  "name": "website-personal",
+  "name": "website-ki5spl",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -51,7 +51,6 @@
   },
   "dependencies": {
     "react": "19.x",
-    "react-dom": "19.x",
-    "react-router-dom": "7.x"
+    "react-dom": "19.x"
   }
 }

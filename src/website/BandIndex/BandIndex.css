@@ -1,0 +1,53 @@
+/* The band jump list: one row of chips per spectrum group. */
+.band-index {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.band-index-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.band-index-label {
+  flex: 0 0 6.5rem;
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.band-index ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+}
+
+/* A chip is a bordered button-like link; hover lifts it to the accent. */
+.band-index a {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--rule-strong);
+  background: var(--raised);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.band-index a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .band-index-label {
+    flex-basis: 100%;
+  }
+}

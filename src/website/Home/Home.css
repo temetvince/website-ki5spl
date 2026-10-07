@@ -2,20 +2,19 @@ section[id] {
   scroll-margin-top: 4.5rem;
 }
 
-/* The first thing the Tab key reaches. It sits off the sheet until focused,
-   then drops in above the sticky header, set like a button. */
+/* The first thing the Tab key reaches. It sits off the panel until focused,
+   then drops in above the sticky bar. */
 .skip-link {
   position: absolute;
   top: var(--space-1);
   left: var(--space-1);
   z-index: 20;
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 0.9rem;
   background: var(--accent);
   color: var(--on-accent);
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
   transform: translateY(-200%);
@@ -32,14 +31,95 @@ main:focus {
   outline: none;
 }
 
-.section {
-  padding: var(--space-5) var(--gutter);
+/* The panel bar: brand, class toggle, and nav in one sticky strip. */
+.panel-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bar-bg);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule-strong);
 }
 
-.section-alt {
-  background: var(--paper-alt);
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
+.panel-bar-inner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0.5rem var(--gutter);
+}
+
+.panel-brand {
+  font-weight: 700;
+  font-size: var(--text-lede);
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.panel-brand::before {
+  content: '';
+  display: inline-block;
+  width: 0.4em;
+  height: 0.8em;
+  margin-right: 0.35em;
+  vertical-align: -0.05em;
+  background: var(--accent);
+}
+
+.panel-brand:hover {
+  color: var(--accent);
+}
+
+.panel-bar .class-picker {
+  margin-left: auto;
+}
+
+.panel-nav {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.panel-nav a {
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.panel-nav a:hover {
+  color: var(--accent);
+}
+
+/* On a phone the toggle takes the whole second line, full width. */
+@media (max-width: 560px) {
+  .panel-bar .class-picker {
+    order: 3;
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+
+  .panel-bar .class-picker-options {
+    display: flex;
+    width: 100%;
+  }
+
+  .panel-bar .class-picker-option {
+    flex: 1 1 0;
+    text-align: center;
+  }
+
+  .panel-nav {
+    margin-left: auto;
+  }
+}
+
+.section {
+  padding: var(--space-3) var(--gutter);
 }
 
 .section-inner {
@@ -47,207 +127,143 @@ main:focus {
   margin: 0 auto;
 }
 
-/* A heading sits on its own rule, spanning the full column measure — the way
-   a section head does on a printed page. */
-.section h2 {
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
-  border-bottom: 2px solid var(--rule);
-  padding-bottom: 0.5rem;
+.section h1 {
+  font-size: clamp(1.3rem, 3.2vw, 1.8rem);
+  font-weight: 600;
+  text-wrap: balance;
+  max-width: var(--measure);
   margin-bottom: var(--space-2);
 }
 
-/* The standfirst beneath a section head. */
-.section-lede {
-  font-style: italic;
-  font-size: var(--text-lede);
-  color: var(--ink-soft);
-  max-width: var(--measure);
-  margin-bottom: var(--space-4);
-}
-
-.byline {
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-bottom: var(--space-3);
-}
-
-/* The lead story runs beside its fact box, the way a paper sets a feature
-   with a standing sidebar. */
-.story {
+/* A group heading is a readout strip with a rule running out to the edge. */
+.section h2 {
   display: flex;
-  align-items: flex-start;
-  gap: var(--space-4);
-}
-
-.story-main {
-  flex: 1 1 var(--measure);
-  max-width: var(--measure);
-}
-
-.story-aside {
-  flex: 0 0 19rem;
-}
-
-.story-aside h3 {
-  padding-bottom: 0.4rem;
-  margin-bottom: var(--space-1);
-  border-bottom: 1px solid var(--rule-soft);
-}
-
-.story-aside dt {
-  font-family: var(--font-mono);
+  align-items: center;
+  gap: var(--space-2);
   font-size: var(--text-label);
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-weight: 600;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--accent);
+}
+
+.section h2::after {
+  content: '';
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--rule-strong);
+}
+
+/* Figure legend: the same swatches the band figures use, printed once
+   beneath the headline as a row of chips. */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem var(--space-2);
+  list-style: none;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-label);
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.band-group + .band-group {
+  margin-top: var(--space-4);
+}
+
+/* The about panel: prose beside a column of rules and sources. */
+.about {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
   margin-top: var(--space-2);
 }
 
-.story-aside dd {
+.about-main {
+  flex: 1 1 var(--measure);
+  max-width: var(--measure);
   color: var(--ink-soft);
-  font-size: var(--text-body);
 }
 
-/* The marks of a lead story: justified setting, indented paragraphs, and a
-   drop cap. */
-.prose {
-  text-align: justify;
-  hyphens: auto;
-  orphans: 2;
-  widows: 2;
+.about-main p + p {
+  margin-top: var(--space-2);
 }
 
-/* Indented paragraphs with no space between them, as set in print. */
-.prose p + p {
-  text-indent: 1.4em;
+.about-aside {
+  flex: 0 0 22rem;
+  padding: var(--space-2);
 }
 
-.prose > p:first-of-type::first-letter {
-  float: left;
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 3.3em;
-  line-height: 0.82;
-  padding-right: 0.07em;
-  margin-top: 0.04em;
+.about-aside h3 {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: 0.4rem;
+  margin-bottom: var(--space-1);
+  border-bottom: 1px solid var(--rule);
 }
 
-/* A line lifted from the story and set between double rules, as a paper does
-   to break a long passage of grey text. */
-.pull-quote {
-  margin: var(--space-3) 0;
-  padding: var(--space-2) 0;
-  border-top: 3px double var(--rule);
-  border-bottom: 3px double var(--rule);
-  font-family: var(--font-display);
-  font-size: var(--text-quote);
-  font-style: italic;
-  line-height: 1.4;
-  text-align: center;
-  color: var(--ink);
+.about-aside h3 + ul {
+  margin-bottom: var(--space-3);
 }
 
-/* The paragraph opening a passage is never indented, in print or here. */
-.pull-quote p,
-.pull-quote + p {
-  text-indent: 0;
+.about-aside ul {
+  padding-left: 1.2em;
+  font-size: var(--text-label);
+  color: var(--ink-soft);
+}
+
+.about-aside li + li {
+  margin-top: 0.4rem;
 }
 
 @media (max-width: 860px) {
-  .story {
+  .about {
     flex-direction: column;
   }
 
-  .story-main {
+  .about-main {
     max-width: 100%;
   }
 
-  .story-aside {
+  .about-aside {
     flex: 0 0 auto;
     width: 100%;
   }
 }
 
-/* Credibility strip */
-.credibility {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  gap: var(--space-1) var(--space-3);
-  padding: var(--space-3) var(--gutter);
-  background: var(--paper-sunken);
-  border-bottom: 1px solid var(--rule);
-}
-
-.credibility-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-
-.credibility-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-1) var(--space-3);
-  list-style: none;
-}
-
-.credibility-list li {
-  font-family: var(--font-display);
-  font-size: var(--text-subhead);
-  font-weight: 700;
-  color: var(--ink);
-}
-
-/* Approach steps — four across, so they need a narrower column than the
-   default card grid. */
-.approach-steps {
-  --card-min: 14rem;
-}
-
-/* Contact */
-.contact-lede {
-  margin-bottom: var(--space-3);
-}
-
-/* Footer */
+/* Footer: a status line. */
 .site-footer {
-  background: var(--paper-sunken);
-  border-top: 3px double var(--rule);
-  color: var(--ink-soft);
-  padding: var(--space-4) var(--gutter);
+  border-top: 1px solid var(--rule-strong);
+  padding: var(--space-3) var(--gutter);
+  color: var(--ink-faint);
 }
 
 .site-footer-inner {
   max-width: var(--page-width);
   margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-@media (max-width: 720px) {
-  .section {
-    padding: var(--space-4) var(--gutter);
+/* On paper the bar and the index are furniture; what prints is the plan. */
+@media print {
+  .panel-bar,
+  .skip-link,
+  .band-index {
+    display: none;
   }
 
-  .site-footer-inner {
-    flex-direction: column;
-    text-align: center;
+  .band {
+    break-inside: avoid;
   }
 }

@@ -1,7 +1,6 @@
 .masthead {
-  background: var(--paper);
-  padding: var(--space-4) var(--gutter) 0;
-  text-align: center;
+  padding: var(--space-4) var(--gutter) var(--space-3);
+  border-bottom: 1px solid var(--rule);
 }
 
 .masthead-inner {
@@ -9,51 +8,51 @@
   margin: 0 auto;
 }
 
+/* The title is set like a readout on a front panel: a block cursor in the
+   accent, then the name in heavy mono. */
 .masthead-title {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(2.6rem, 7vw, 5rem);
-  line-height: 1;
-  letter-spacing: 0.01em;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   color: var(--ink);
 }
 
-.masthead-tagline {
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-top: var(--space-2);
+.masthead-title::before {
+  content: '';
+  display: inline-block;
+  width: 0.35em;
+  height: 0.85em;
+  margin-right: 0.3em;
+  vertical-align: -0.05em;
+  background: var(--accent);
 }
 
-/* The dateline sits between a hairline and a double rule — the standard
-   nameplate treatment, and the detail that reads as "newspaper" without any
-   costume. */
+.masthead-tagline {
+  margin-top: var(--space-1);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Readouts: a row of bordered chips. */
 .masthead-dateline {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-1) var(--space-3);
+  gap: var(--space-1);
   list-style: none;
-  margin-top: var(--space-3);
-  padding: 0.5rem 0;
-  border-top: 1px solid var(--rule);
-  border-bottom: 3px double var(--rule);
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
+  margin-top: var(--space-2);
 }
 
-@media (max-width: 720px) {
-  .masthead-dateline {
-    justify-content: center;
-    text-align: center;
-  }
-
-  .masthead-tagline {
-    letter-spacing: 0.18em;
-  }
+.masthead-dateline li {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  font-size: var(--text-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
 }

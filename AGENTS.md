@@ -178,8 +178,9 @@ Check all of the following on every non-trivial change:
 
 - **Contrast — measure it.** Every text/background pair clears 4.5:1, or 3:1 for
   large text. Every UI component boundary and focus indicator clears 3:1
-  (success criterion 1.4.11). Measure **both editions**: a token that passes on
-  the day sheet can fail on the night one.
+  (success criterion 1.4.11). The site ships **one edition, dark**: measure
+  every pair against the surface it actually prints on, which for a tag is
+  `--raised` and for a figure fill is `--sunken`, not the page background.
 - **Keyboard.** Every interactive element is reachable and operable by keyboard
   alone, and shows a visible focus indicator. Never add a custom widget without
   keyboard semantics.
@@ -215,7 +216,7 @@ differs.**
       postconditions, invariants).
 - [ ] Rule deviations fixed at the cause; any suppression is narrowly scoped and
       carries its justification.
-- [ ] WCAG 2.1 AA verified: contrast measured in both editions, keyboard path
+- [ ] WCAG 2.1 AA verified: contrast measured on every surface, keyboard path
       exercised, reflow checked at 320px.
 - [ ] `npm run build` is green: lint, format, docs, typecheck, and bundle.
 - [ ] Behavior that the type system cannot prove was exercised by hand in a
