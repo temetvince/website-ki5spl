@@ -98,7 +98,7 @@ module.exports = (_env, argv) => {
       }),
 
       /* Everything in `public/` except the HTML template is a static file that
-         must reach `dist` byte-for-byte — `favicon.ico` today, and a `robots.txt` or a
+         must reach `dist` byte-for-byte — `favicon.ico` today, and a
          `robots.txt` tomorrow. Without this, `public/` is served in development
          and silently absent from the published site.
 
