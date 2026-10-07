@@ -35,10 +35,11 @@ bundle filename so a host can cache it indefinitely.
 ## Publishing
 
 `npm run build` writes everything the site needs into `dist/`. That folder is
-the complete, self-contained deployable — upload its **contents** to the root
-of any static host. The GitHub Actions workflow in
-[`.github/workflows/build.yml`](.github/workflows/build.yml) does this on every
-push to `main`, publishing `dist/` to GitHub Pages.
+the complete, self-contained deployable: upload its **contents** to the root of
+any static host. The site is hosted on AWS. The GitHub Actions workflow in
+[`.github/workflows/build.yml`](.github/workflows/build.yml) runs the full build
+on every push and pull request and attaches `dist/` to the run as an artifact
+named `dist`; it does not deploy.
 
 A published build contains:
 
@@ -47,18 +48,21 @@ A published build contains:
 | `index.html` | The page shell. Loads the bundle. |
 | `index_bundle.<hash>.js` | React, the app, both data sets, and all CSS. |
 | `favicon.ico` | Copied verbatim from `public/`. |
-| `CNAME` | Copied verbatim from `public/`; tells GitHub Pages the custom domain. |
 
-Two things are worth knowing before you deploy:
+Three things are worth knowing before you deploy:
 
 1. **Anything you put in `public/` is copied into `dist/` as-is**, apart from
-   `index.html`, which is the template webpack builds the real page from. The
-   `CNAME` file lives there for exactly this reason: GitHub Pages reads it from
-   the published branch, and the deploy step replaces that branch wholesale.
-2. **The site is a single route (`/`).** It needs no server-side rewrite rules.
-   The chosen license class travels in the query string, as `?class=general`,
-   and a band anchor such as `#band-40-m` scrolls to that band on load, so a
-   link to a particular class and band works on any static host.
+   `index.html`, which is the template webpack builds the real page from. A
+   `robots.txt` placed there will ship.
+2. **The site is a single route (`/`).** It needs no server-side rewrite
+   rules. The chosen license class travels in the query string, as
+   `?class=general`, and a band anchor such as `#band-40-m` scrolls to that
+   band on load, so a link to a particular class and band works on any static
+   host. The host only has to serve `index.html` for `/`.
+3. **Cache the bundle forever and the shell briefly.** The bundle's filename
+   carries a content hash, so it can be served with a long `Cache-Control`
+   max-age; `index.html` is what changes between releases and should be served
+   with a short one, or invalidated on each deploy.
 
 ## How the page is built
 

@@ -1,5 +1,5 @@
 # .github/workflows/build.yml
-name: Build & Deploy to GitHub Pages
+name: Build
 
 on:
   push:
@@ -8,12 +8,10 @@ on:
     branches: [main]
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pages: write
-      id-token: write
+      contents: read
 
     strategy:
       matrix:
@@ -28,20 +26,18 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
+      # `npm run build` is the whole gate: lint, format, docs, typecheck, and
+      # the production bundle. A red step here is a red build.
       - name: Install and build
         run: |
           npm ci
           npm run build
 
-      - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v4
+      # The finished site, ready to upload to the host. Deployment to AWS is
+      # done outside this workflow; this artifact is what gets deployed.
+      - name: Upload the built site
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          keep_files: false
-          # Commit metadata (optional, for cleaner history)
-          user_name: 'GitHub Actions Bot'
-          user_email: '41898282+github-actions[bot]@users.noreply.github.com'
-          # Force orphan branch (helps if gh-pages is missing)
-          force_orphan: true
+          name: dist
+          path: dist
+          if-no-files-found: error
